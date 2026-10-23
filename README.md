@@ -39,7 +39,7 @@ Set these environment variables in .env.local or your hosting provider's server-
 
 ~~~env
 GEMINI_API_KEY=your_key_here
-GEMINI_MODEL=gemini-2.5-flash
+GEMINI_MODEL=gemini-3.8-flash
 ~~~
 
 Never add real API keys to Git, client-side code, screenshots, or public issues. The app reads credentials only in server routes.
