@@ -136,6 +136,8 @@ export async function POST(request: Request) {
   }
   const file = form.get("file");
   const subject = String(form.get("subject") || "").slice(0, 160);
+  const kindValue = String(form.get("kindHint") || "auto");
+  const forcedKind = ["past-paper", "syllabus", "teacher-bank", "notes"].includes(kindValue) ? kindValue as AnalysisRecord["kind"] : null;
   if (!(file instanceof File)) return NextResponse.json({ error: "Choose a file to analyse." }, { status: 400 });
   if (!file.size) return NextResponse.json({ error: "The selected file is empty." }, { status: 400 });
   if (file.size > MAX_FILE_BYTES) return NextResponse.json({ error: "Files must be 12 MB or smaller in this MVP." }, { status: 413 });
@@ -166,13 +168,17 @@ export async function POST(request: Request) {
     const model = (process.env.GEMINI_MODEL || "gemini-3.8-flash").replace(/[^a-zA-Z0-9._-]/g, "");
     try {
       const analysis = await geminiAnalysis(apiKey, model, file, buffer, extractedText, subject);
-      if (analysis) return NextResponse.json({ analysis, mode: "gemini" });
+      if (analysis) {
+        if (forcedKind) analysis.kind = forcedKind;
+        return NextResponse.json({ analysis, mode: "gemini" });
+      }
     } catch (error) {
       extractionError = error instanceof Error ? error.message.slice(0, 200) : "Gemini analysis failed.";
     }
   }
 
   const analysis = heuristicAnalysis(file.name, subject, extractedText, extractionError);
+  if (forcedKind) analysis.kind = forcedKind;
   return NextResponse.json({
     analysis,
     mode: "demo",
