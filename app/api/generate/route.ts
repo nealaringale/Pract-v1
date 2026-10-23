@@ -176,7 +176,7 @@ export async function POST(request: Request) {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) return NextResponse.json({ paper: buildDemoPaper(input), mode: "demo" });
 
-  const model = (process.env.GEMINI_MODEL || "gemini-2.5-flash").replace(/[^a-zA-Z0-9._-]/g, "");
+  const model = (process.env.GEMINI_MODEL || "gemini-3.8-flash").replace(/[^a-zA-Z0-9._-]/g, "");
   const materialList = Array.isArray(input.materials) ? input.materials.slice(0, 60) : [];
   const topicList = Array.isArray(input.topics) ? input.topics.slice(0, 40) : [];
   const prompt = [
