@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, DragEvent, useEffect, useMemo, useRef, useState } from "react";
+import { ChangeEvent, DragEvent, ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import {
   Activity, AlertCircle, ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Bell,
   BookOpen, Bookmark, Check, CheckCircle2, ChevronDown, ChevronRight, Clock3,
@@ -112,7 +112,7 @@ function Toggle({ value, onChange, label, description }: { value: boolean; onCha
   );
 }
 
-function Pill({ children, tone = "default" }: { children: React.ReactNode; tone?: "default" | "green" | "purple" | "amber" | "blue" }) {
+function Pill({ children, tone = "default" }: { children: ReactNode; tone?: "default" | "green" | "purple" | "amber" | "blue" }) {
   return <span className={"pill pill-" + tone}>{children}</span>;
 }
 
