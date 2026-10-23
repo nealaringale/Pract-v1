@@ -127,6 +127,7 @@ export default function Home() {
   const [uploadProgress, setUploadProgress] = useState("");
   const [questionFilter, setQuestionFilter] = useState("All questions");
   const [subject, setSubject] = useState(subjects[0]);
+  const [uploadKind, setUploadKind] = useState("auto");
   const [customSubject, setCustomSubject] = useState("");
   const [totalMarks, setTotalMarks] = useState("50");
   const [duration, setDuration] = useState("120");
@@ -233,6 +234,7 @@ export default function Home() {
       const form = new FormData();
       form.append("file", file);
       form.append("subject", currentSubject);
+      form.append("kindHint", uploadKind);
       try {
         const response = await fetch("/api/analyze", { method: "POST", body: form });
         const payload = await response.json();
@@ -525,6 +527,11 @@ export default function Home() {
                 <div className="upload-icon"><CloudUpload size={23} /></div>
                 <h3>{uploadBusy ? "Working on your files..." : "Drop your study material here"}</h3>
                 <p>{uploadBusy ? uploadProgress : "PDF, DOCX, TXT, Markdown, CSV or images · Up to 12 MB per file · Up to 8 at once"}</p>
+                {!uploadBusy ? <div className="upload-controls">
+                  <label><span>Subject context</span><select value={subject} onChange={event => setSubject(event.target.value)}>{subjects.map(option => <option key={option} value={option}>{option}</option>)}</select></label>
+                  <label><span>Document type</span><select value={uploadKind} onChange={event => setUploadKind(event.target.value)}><option value="auto">Auto-detect</option><option value="past-paper">Previous question paper</option><option value="syllabus">Syllabus</option><option value="teacher-bank">Teacher question bank</option><option value="notes">Study notes</option></select></label>
+                </div> : null}
+                {subject === "Other / custom subject" && !uploadBusy ? <input className="text-input upload-custom-subject" value={customSubject} onChange={event => setCustomSubject(event.target.value)} placeholder="Enter your subject name" maxLength={120} /> : null}
                 {uploadBusy ? <div className="progress-track"><span /></div> : <button className="button button-outline" onClick={openFilePicker}><Upload size={15} /> Browse files</button>}
                 <div className="upload-security"><LockKeyhole size={13} /> Files are processed by your server and results are saved in this browser workspace.</div>
               </div>
