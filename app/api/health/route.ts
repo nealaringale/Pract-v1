@@ -7,7 +7,7 @@ export async function GET() {
     ok: true,
     app: "PaperLens AI",
     aiConfigured: Boolean(process.env.GEMINI_API_KEY),
-    model: process.env.GEMINI_API_KEY ? (process.env.GEMINI_MODEL || "gemini-2.5-flash") : null,
+    model: process.env.GEMINI_API_KEY ? (process.env.GEMINI_MODEL || "gemini-3.8-flash") : null,
     mode: process.env.GEMINI_API_KEY ? "gemini" : "demo",
     timestamp: new Date().toISOString()
   });
