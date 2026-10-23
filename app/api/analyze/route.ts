@@ -163,7 +163,7 @@ export async function POST(request: Request) {
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (apiKey) {
-    const model = (process.env.GEMINI_MODEL || "gemini-2.5-flash").replace(/[^a-zA-Z0-9._-]/g, "");
+    const model = (process.env.GEMINI_MODEL || "gemini-3.8-flash").replace(/[^a-zA-Z0-9._-]/g, "");
     try {
       const analysis = await geminiAnalysis(apiKey, model, file, buffer, extractedText, subject);
       if (analysis) return NextResponse.json({ analysis, mode: "gemini" });
