@@ -430,6 +430,7 @@ export default function Home() {
         </header>
 
         <main className="page-content">
+          <input ref={fileInputRef} type="file" accept=".pdf,.docx,.txt,.md,.csv,.png,.jpg,.jpeg,.webp" multiple onChange={onFileInput} hidden />
           <div className="page-heading">
             <div>
               <div className="eyebrow"><span className="eyebrow-dot" /> YOUR EXAM WORKSPACE</div>
@@ -521,7 +522,6 @@ export default function Home() {
                 <button className="button button-primary" onClick={openFilePicker}><Plus size={16} /> Add files</button>
               </div>
               <div className={"upload-zone " + (uploadBusy ? "upload-busy" : "")} ref={dropZoneRef} onDragOver={event => event.preventDefault()} onDrop={onDrop}>
-                <input ref={fileInputRef} type="file" accept=".pdf,.docx,.txt,.md,.csv,.png,.jpg,.jpeg,.webp" multiple onChange={onFileInput} hidden />
                 <div className="upload-icon"><CloudUpload size={23} /></div>
                 <h3>{uploadBusy ? "Working on your files..." : "Drop your study material here"}</h3>
                 <p>{uploadBusy ? uploadProgress : "PDF, DOCX, TXT, Markdown, CSV or images · Up to 12 MB per file · Up to 8 at once"}</p>
