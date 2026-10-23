@@ -4,7 +4,7 @@ import { ChangeEvent, DragEvent, useEffect, useMemo, useRef, useState } from "re
 import {
   Activity, AlertCircle, ArrowDownRight, ArrowRight, ArrowUpRight, BarChart3, Bell,
   BookOpen, Bookmark, Check, CheckCircle2, ChevronDown, ChevronRight, Clock3,
-  CloudUpload, Copy, ExternalLink, FileCheck, FileText, Filter, FolderOpen,
+  CloudUpload, Copy, Download, ExternalLink, FileCheck, FileText, Filter, FolderOpen,
   GraduationCap, HardDrive, Lightbulb, Loader2, LockKeyhole, Menu, MoreHorizontal,
   Plus, Search, Settings, ShieldCheck, Sparkles, Target, Trash2, Upload, X, Zap
 } from "lucide-react";
