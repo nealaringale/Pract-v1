@@ -174,7 +174,7 @@ export default function Home() {
   }, [documents, hydrated]);
 
   const allQuestions = useMemo(() => {
-    const uploaded = documents.filter(document => !document.sample).flatMap(document => document.analysis?.questions || []);
+    const uploaded = documents.filter(document => !document.sample).flatMap(document => (document.analysis?.questions || []).map((question, index) => ({ ...question, id: document.id + "-q-" + index })));
     const map = new Map<string, QuestionRecord>();
     [...demoQuestions, ...uploaded].forEach(question => {
       const key = question.question.trim().toLowerCase();
@@ -319,7 +319,7 @@ export default function Home() {
           units: selectedUnits,
           includeHints,
           materials: materialQuestions,
-          topics: allTopics.map(topic => ({ name: topic.name, unit: topic.unit, reason: topic.reason, evidence: topic.evidence })).slice(0, 40)
+          topics: documents.filter(document => !document.sample).flatMap(document => document.analysis?.topics || []).map(topic => ({ name: topic.name, unit: topic.unit, reason: topic.reason, evidence: topic.evidence })).slice(0, 40)
         })
       });
       const payload = await response.json();
@@ -361,7 +361,7 @@ export default function Home() {
 
   async function copyEnv() {
     try {
-      await navigator.clipboard.writeText("GEMINI_API_KEY=your_key_here\nGEMINI_MODEL=gemini-2.5-flash");
+      await navigator.clipboard.writeText("GEMINI_API_KEY=your_key_here\nGEMINI_MODEL=gemini-3.8-flash");
       setCopiedSetting(true);
       window.setTimeout(() => setCopiedSetting(false), 1800);
     } catch {
