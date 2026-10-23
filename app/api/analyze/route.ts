@@ -78,7 +78,7 @@ async function geminiAnalysis(apiKey: string, model: string, file: File, buffer:
     text ? "Extracted text:\n" + text.slice(0, 42000) : "Read the attached PDF/image, including printed text. If content is unreadable, state that in summary."
   ].join("\n\n");
   const parts: Array<Record<string, unknown>> = [{ text: prompt }];
-  if (!text.trim() && (file.type.startsWith("image/") || file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf"))) {
+  if (text.trim().length < 60 && (file.type.startsWith("image/") || file.type === "application/pdf" || file.name.toLowerCase().endsWith(".pdf"))) {
     parts.push({ inline_data: { mime_type: file.type || "application/pdf", data: buffer.toString("base64") } });
   }
   const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + model + ":generateContent?key=" + encodeURIComponent(apiKey), {
