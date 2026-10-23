@@ -33,6 +33,17 @@ Requires Node.js 20 or newer.
 
 Without a key, PaperLens uses deterministic demo generation and local document extraction. Scanned PDFs and image OCR need Gemini configured.
 
+## Deploy to Google Cloud Run
+
+The repository includes a multi-stage Dockerfile for running the Next.js UI and API routes on Cloud Run.
+
+1. Install and authenticate the Google Cloud CLI, select your project, and enable Cloud Run and Artifact Registry APIs.
+2. Create a Docker repository in your preferred region, then build and push the image using Artifact Registry's Docker authentication instructions.
+3. Deploy the image to Cloud Run and set `GEMINI_API_KEY` through Secret Manager, or add it as a protected environment variable for a quick prototype. Never commit `.env.local` or include secrets in the Docker build context.
+4. Set `GEMINI_MODEL` to a model enabled for your API project. The app has a `/api/health` endpoint for a basic service check.
+
+A public Cloud Run service should have request limits and appropriate abuse protection before sharing widely. Store API credentials using Secret Manager in production.
+
 ## Configure Gemini
 
 Set these environment variables in .env.local or your hosting provider's server-side environment:
